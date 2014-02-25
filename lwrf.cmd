@@ -151,7 +151,7 @@ if !rx_reply! equ 0 echo No reply from WifiLink 1>&2 && exit /b 1
 goto end
 
 :usage
-set usage=LightwaveRF Command Line Control v4.1 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v4.1 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf room-name device-name on^|off^|lock^|unlock^|dim 1-100!lf!^
