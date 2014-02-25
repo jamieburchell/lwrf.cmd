@@ -11,13 +11,16 @@ lwrf room-name off
 lwrf room-name mood mood-name
 lwrf seq sequence-name
 lwrf seq --cancel-all
+```
 
 ## Examples:
 
+```
 lwrf lounge lights dim 50
 lwrf lounge mood relax
 lwrf "sitting room" "wall lights" on
 lwrf seq "my sequence"
+```
 
 ## Requirements:
 
