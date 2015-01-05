@@ -69,16 +69,14 @@ set device=
 set mood=
 set function=
 set display=
-set rx_timeout=0.2
+set rx_timeout=0.4
 set lf=^
 
 
 ncat --version > NUL 2>&1
-if errorlevel 1 echo ncat not found 1>&2 && exit /b 1
+if errorlevel 1 echo ncat not found 1>&2 && goto err
 
 if "%~1"=="seq" (
-
-	set rx_timeout=0.4
 
 	if "%~2"=="" goto usage
 
@@ -135,23 +133,23 @@ if "%~1"=="seq" (
 )
 
 set tx_id=%random:~0,3%
-set p_tx_id=00%tx_id%
-set p_tx_id=%p_tx_id:~-3%
-set msg="%p_tx_id%,^!!room!!device!!function!|!display!|"
-set rx_reply=0
-set exec=^<nul set /p =!msg!^|ncat -u -n -i %rx_timeout% -p %source_port% %wifi_link_ip% %wifi_link_port% 2^>NUL
+set tx_id=00%tx_id%
+set tx_id=%tx_id:~-3%
+set tx_msg="%tx_id%,^!!room!!device!!function!|!display!|"
+set rx_msg=
+set exec=^<nul set /p =!tx_msg!^|ncat -u -n -i %rx_timeout% -p %source_port% %wifi_link_ip% %wifi_link_port% 2^>NUL
 
 for /f "tokens=*" %%a in ('!exec!') do (
-	set rx_reply=1
-	if not "%%a"=="%tx_id%,OK" echo %%a 1>&2 && exit /b 1
+	if "%%a"=="%tx_id%,OK" goto end
+	set rx_msg=!rx_msg!%%a!lf!
 )
 
-if !rx_reply! equ 0 echo No reply from WifiLink 1>&2 && exit /b 1
-
-goto end
+echo No confirmation received from WifiLink 1>&2
+if not "!rx_msg!"=="" echo Reply: !rx_msg! 1>&2
+goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v4.1 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v4.2 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf room-name device-name on^|off^|lock^|unlock^|dim 1-100!lf!^
@@ -175,6 +173,8 @@ Requirements:!lf!^
   The WifiLink will prompt for registration when the first command is sent.
 
 echo !usage! 1>&2
+
+:err
 exit /b 1
 
 :end
