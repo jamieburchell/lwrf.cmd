@@ -161,7 +161,7 @@ goto err
 set usage=LightwaveRF Windows Command Line Control v5 by Jamie Burchell!lf!^
 
 Usage:!lf!^
-lwrf reg
+lwrf reg!lf!^
 lwrf room-name device-name on^|off^|lock^|unlock^|dim 1-100!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
