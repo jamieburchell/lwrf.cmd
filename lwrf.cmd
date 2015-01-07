@@ -76,7 +76,12 @@ set lf=^
 ncat --version > NUL 2>&1
 if errorlevel 1 echo ncat not found 1>&2 && goto err
 
-if "%~1"=="seq" (
+if "%~1"=="reg" (
+
+	set function=F*p
+	set display=register
+
+) else if "%~1"=="seq" (
 
 	if "%~2"=="" goto usage
 
@@ -144,14 +149,19 @@ for /f "tokens=*" %%a in ('!exec!') do (
 	set rx_msg=!rx_msg!%%a!lf!
 )
 
-echo No confirmation received from WifiLink 1>&2
-if not "!rx_msg!"=="" echo Reply: !rx_msg! 1>&2
+if "!rx_msg!"=="" (
+	echo No confirmation received from WifiLink 1>&2
+) else (
+	echo !rx_msg! 1>&2
+)
+
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v4.2 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v5 by Jamie Burchell!lf!^
 
 Usage:!lf!^
+lwrf reg
 lwrf room-name device-name on^|off^|lock^|unlock^|dim 1-100!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
@@ -169,8 +179,8 @@ Requirements:!lf!^
   http://nmap.org/ncat and put it in the Windows PATH (e.g. system32 folder)!lf!^
 2 You must edit the configuration parameters at the top of this script!lf!^
 3 Allow ports %wifi_link_port% outbound (UDP) and %source_port% inbound (UDP) on this device!lf!^
-4 This device must be registered with your WifiLink.!lf!^
-  The WifiLink will prompt for registration when the first command is sent.
+4 The MAC address of this device must be registered with your WifiLink.!lf!^
+  Enter: lwrf reg and select "Yes" at the WifiLink unit
 
 echo !usage! 1>&2
 
