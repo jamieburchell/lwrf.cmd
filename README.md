@@ -10,7 +10,7 @@ lwrf register
 lwrf room-name device-name on|off|lock|unlock|dim 1-100
 lwrf room-name off
 lwrf room-name mood mood-name
-lwrf trv trv-name register^|on^|off^|temp 0-40^|pos 0-5
+lwrf trv trv-name register|on|off|temp 0-40|pos 0-5
 lwrf seq sequence-name
 lwrf seq --cancel-all
 ```
