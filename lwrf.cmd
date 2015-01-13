@@ -9,7 +9,7 @@ setlocal EnableDelayedExpansion EnableExtensions
 set wifi_link_ip=192.168.1.7
 set wifi_link_port=9760
 set source_port=9761
-set debug=1
+set debug=0
 :: -------------------------------------------------
 
 :: -- Room configuration ---------------------------
