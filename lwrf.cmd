@@ -9,7 +9,7 @@ setlocal EnableDelayedExpansion EnableExtensions
 set wifi_link_ip=192.168.1.7
 set wifi_link_port=9760
 set source_port=9761
-set debug=0
+set debug=1
 :: -------------------------------------------------
 
 :: -- Room configuration ---------------------------
@@ -134,9 +134,9 @@ if "%~1"=="trv" (
 
       if "%~3"=="temp" (
         set temp=%~4
-        if !temp! lss 1 goto usage
+        if !temp! lss 0 goto usage
         if !temp! gtr 40 goto usage
-        set function=F*tP!temp!.0
+        set function=F*tP!temp!
         set display=!display! %~4%
         goto send
       )
