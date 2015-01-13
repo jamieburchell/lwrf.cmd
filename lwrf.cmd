@@ -113,7 +113,7 @@ if "%~1"=="trv" (
   for /l %%r in (1,1,8) do (
     if "!TRV%%r!"=="%~2" (
 
-      set room=%%r
+      set room=R%%r
 
       if "%~3"=="register" (
         set function=F*L
