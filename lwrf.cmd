@@ -13,7 +13,7 @@ set debug=0
 :: -------------------------------------------------
 
 :: -- Room configuration ---------------------------
-:: Add as many rooms as necessary (max 8)
+:: Add as many rooms as necessary (max 16)
 :: E.g:
 :: R1=spare bedroom
 :: R2=living-room
@@ -29,7 +29,7 @@ set R8=kitchen
 :: -------------------------------------------------
 
 :: -- Room/Device configuration --------------------
-:: Add as many devices as necessary (max 8 per room)
+:: Add as many devices as necessary (max 16 per room)
 :: see below for TRVs
 :: E.g:
 :: R1D1=lights
@@ -68,7 +68,6 @@ set R6M1=relax
 :: E.g:
 :: TRV1=lounge
 :: TRV2=hall
-set TRV1=lounge
 :: -------------------------------------------------
 
 :: /////////////////////////////////////////////////
@@ -158,7 +157,7 @@ if "%~1"=="trv" (
   goto usage
 )
 
-for /l %%r in (1,1,8) do (
+for /l %%r in (1,1,16) do (
   if "!R%%r!"=="%~1" (
 
     set room=R%%r
@@ -176,7 +175,7 @@ for /l %%r in (1,1,8) do (
       goto send
     )
 
-    for /l %%d in (1,1,6) do if "!R%%rD%%d!"=="%~2" set device=D%%d
+    for /l %%d in (1,1,16) do if "!R%%rD%%d!"=="%~2" set device=D%%d
     if "!device!"=="" goto usage
 
     if "%~3"=="on" (
@@ -236,7 +235,7 @@ if "!rx_msg!"=="" (
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.1 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
