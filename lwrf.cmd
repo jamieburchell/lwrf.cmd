@@ -6,7 +6,7 @@ setlocal EnableDelayedExpansion EnableExtensions
 :: /////////////////////////////////////////////////
 
 :: -- Basic configuration --------------------------
-set wifi_link_ip=192.168.1.7
+set wifi_link_host=192.168.1.7
 set wifi_link_port=9760
 set source_port=9761
 set debug=0
@@ -218,7 +218,7 @@ set tx_id=00%tx_id%
 set tx_id=%tx_id:~-3%
 set tx_msg="%tx_id%,^!!room!!device!!function!|!display!|"
 set rx_msg=
-set exec=^<nul set /p =!tx_msg!^|ncat -u -n -i %rx_timeout% -p %source_port% %wifi_link_ip% %wifi_link_port% 2^>NUL
+set exec=^<nul set /p =!tx_msg!^|ncat -u -i %rx_timeout% -p %source_port% %wifi_link_host% %wifi_link_port% 2^>NUL
 
 if %debug% equ 1 echo !tx_msg!
 
@@ -235,7 +235,7 @@ if "!rx_msg!"=="" (
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6.1 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.2 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
