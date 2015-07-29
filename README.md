@@ -32,3 +32,6 @@ lwrf trv lounge temp 22
 3. Allow ports %wifi_link_port% outbound (UDP) and %source_port% inbound (UDP) on the device
 4. The MAC address of this device must be registered with your WifiLink.
    Enter: lwrf register and select "Yes" at the WifiLink unit
+
+## Forum/Support
+http://lightwaverfcommunity.org.uk/forums/topic/windows-command-line-control
