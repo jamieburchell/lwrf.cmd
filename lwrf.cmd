@@ -235,7 +235,7 @@ if "!rx_msg!"=="" (
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6.2 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.3 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
