@@ -1,7 +1,7 @@
 lwrf.cmd
 ========
 
-LightwaveRF Windows Command Line Control v6.2 by Jamie Burchell
+LightwaveRF Windows Command Line Control v6.3 by Jamie Burchell
 
 ## Usage:
 
