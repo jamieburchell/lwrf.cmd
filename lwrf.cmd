@@ -51,6 +51,9 @@ set R6D6=lan
 set R7D1=lights
 set R7D2=speakers
 set R7D3=computers
+set R7D4=lan
+set R7D5=accessories
+set R7D6=leds
 set R8D1=side-lights
 set R8D2=main-lights
 :: -------------------------------------------------
@@ -193,6 +196,11 @@ for /l %%r in (1,1,16) do (
       goto send
     )
 
+    if "%~3"=="full-lock" (
+      set function=Fk
+      goto send
+    )
+
     if "%~3"=="unlock" (
       set function=Fu
       goto send
@@ -235,11 +243,11 @@ if "!rx_msg!"=="" (
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6.3 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.4 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
-lwrf room-name device-name on^|off^|lock^|unlock^|dim 1-100!lf!^
+lwrf room-name device-name on^|off^|lock^|full-lock^|unlock^|dim 1-100!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
 lwrf trv trv-name register^|on^|off^|temp 0-40^|pos 0-5!lf!^
