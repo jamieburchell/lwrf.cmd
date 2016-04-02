@@ -1,13 +1,13 @@
 lwrf.cmd
 ========
 
-LightwaveRF Windows Command Line Control v6.3 by Jamie Burchell
+LightwaveRF Windows Command Line Control v6.4 by Jamie Burchell
 
 ## Usage:
 
 ```
 lwrf register
-lwrf room-name device-name on|off|lock|unlock|dim 1-100
+lwrf room-name device-name on|off|lock|full-lock|unlock|dim 1-100
 lwrf room-name off
 lwrf room-name mood mood-name
 lwrf trv trv-name register|on|off|temp 0-40|pos 0-5
