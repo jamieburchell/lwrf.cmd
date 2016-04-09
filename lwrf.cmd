@@ -30,7 +30,7 @@ set R8=kitchen
 
 :: -- Room/Device configuration --------------------
 :: Add as many devices as necessary (max 16 per room)
-:: see below for TRVs
+:: see below for TRVs and thermostats
 :: E.g:
 :: R1D1=lights
 :: R1D2=plug socket
@@ -41,13 +41,13 @@ set R3D1=lights
 set R4D1=lights
 set R4D2=lamp
 set R5D1=lights
-set R5D6=wall-lights
 set R6D1=lights
 set R6D2=stair-lights
 set R6D3=tv
 set R6D4=tv-spare
 set R6D5=lamp
-set R6D6=lan
+set R6D6=lamp-spare
+set R6D7=wall-lights
 set R7D1=lights
 set R7D2=speakers
 set R7D3=computers
@@ -66,11 +66,16 @@ set R8D2=main-lights
 set R6M1=relax
 :: -------------------------------------------------
 
-:: -- TRV configuration ----------------------------
-:: Add as many TRVs as necessary (max 8)
+:: -- TRV/Stat configuration -----------------------
+:: Add as many TRVs/Stats as necessary (max 16)
+:: Each TRV/stat must be on a different number
 :: E.g:
 :: TRV1=lounge
 :: TRV2=hall
+:: STAT3=lounge
+:: STAT4=hall
+:: TRV5=kitchen
+set STAT1=sitting-room
 :: -------------------------------------------------
 
 :: /////////////////////////////////////////////////
@@ -112,10 +117,11 @@ if "%~1"=="seq" (
 
 if "%~1"=="trv" (
 
-  for /l %%r in (1,1,8) do (
+  for /l %%r in (1,1,16) do (
     if "!TRV%%r!"=="%~2" (
 
       set room=R%%r
+      set display=TRV^|%~3
 
       if "%~3"=="register" (
         set function=F*L
@@ -149,6 +155,37 @@ if "%~1"=="trv" (
         if !pos! gtr 5 goto usage
         set /a pos=!pos!+50+!pos!*2-!pos!
         set function=F*tP!pos!.0
+        set display=!display! %~4%
+        goto send
+      )
+
+      goto usage
+    )
+  )
+
+  goto usage
+)
+
+if "%~1"=="stat" (
+
+  for /l %%r in (1,1,16) do (
+    if "!STAT%%r!"=="%~2" (
+
+      set room=R%%r
+      set display=Thermostat^|%~3
+
+      if "%~3"=="register" (
+        set function=F*L
+        goto send
+      )
+
+      set device=Dh
+
+      if "%~3"=="temp" (
+        set temp=%~4
+        if !temp! lss 0 goto usage
+        if !temp! gtr 40 goto usage
+        set function=F*tP!temp!
         set display=!display! %~4%
         goto send
       )
@@ -243,7 +280,7 @@ if "!rx_msg!"=="" (
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6.4 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.5 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
@@ -251,6 +288,7 @@ lwrf room-name device-name on^|off^|lock^|full-lock^|unlock^|dim 1-100!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
 lwrf trv trv-name register^|on^|off^|temp 0-40^|pos 0-5!lf!^
+lwrf stat stat-name register^|temp 0-40!lf!^
 lwrf seq sequence-name!lf!^
 lwrf seq --cancel-all!lf!^
 
@@ -260,6 +298,7 @@ lwrf lounge mood relax!lf!^
 lwrf "sitting room" "wall lights" on!lf!^
 lwrf seq "my sequence"!lf!^
 lwrf trv lounge temp 22!lf!^
+lwrf stat sitting-room temp 22!lf!^
 
 Requirements:!lf!^
 1 The ncat utility to send the messages. Download the Windows binary from!lf!^
