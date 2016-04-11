@@ -1,7 +1,7 @@
 lwrf.cmd
 ========
 
-LightwaveRF Windows Command Line Control v6.5 by Jamie Burchell
+LightwaveRF Windows Command Line Control v6.6 by Jamie Burchell
 
 ## Usage:
 
@@ -11,7 +11,7 @@ lwrf room-name device-name on|off|lock|full-lock|unlock|dim 1-100
 lwrf room-name off
 lwrf room-name mood mood-name
 lwrf trv trv-name register|on|off|temp 0-40|pos 0-5
-lwrf stat stat-name register|temp 0-40
+lwrf stat stat-name register|temp 0-40|mode [standby|running|away|frost|constant|holiday 1-90]
 lwrf seq sequence-name
 lwrf seq --cancel-all
 ```
@@ -25,6 +25,8 @@ lwrf "sitting room" "wall lights" on
 lwrf seq "my sequence"
 lwrf trv lounge temp 22
 lwrf stat sitting-room temp 22
+lwrf stat sitting-room mode constant
+lwrf stat sitting-room mode holiday 14
 ```
 
 ## Requirements:
