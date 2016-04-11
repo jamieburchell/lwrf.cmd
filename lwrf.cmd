@@ -63,7 +63,7 @@ set R8D2=main-lights
 :: E.g:
 :: R1M1=relax
 :: R1M2=movie
-set R6M1=relax
+set R4M1=relax
 :: -------------------------------------------------
 
 :: -- TRV/Stat configuration -----------------------
@@ -75,7 +75,7 @@ set R6M1=relax
 :: STAT3=lounge
 :: STAT4=hall
 :: TRV5=kitchen
-set STAT1=sitting-room
+set STAT1=main
 :: -------------------------------------------------
 
 :: /////////////////////////////////////////////////
@@ -117,48 +117,39 @@ if "%~1"=="seq" (
 
 if "%~1"=="trv" (
 
+  if "%~2"=="" goto usage
+
   for /l %%r in (1,1,16) do (
     if "!TRV%%r!"=="%~2" (
 
       set room=R%%r
-      set display=TRV^|%~3
+      set display=trv^|%~3
 
-      if "%~3"=="register" (
-        set function=F*L
-        goto send
-      )
+      if "%~3"=="register" set function=F*L& goto send
 
       set device=Dh
 
-      if "%~3"=="off" (
-        set function=F*tP50.0
-        goto send
-      )
-
-      if "%~3"=="on" (
-        set function=F*tP60.0
-        goto send
-      )
-
+      if "%~3"=="off" set function=F*tP50.0& goto send
+      if "%~3"=="on"  set function=F*tP60.0& goto send
       if "%~3"=="temp" (
+        if "%~4"=="" goto usage
         set temp=%~4
-        if !temp! lss 0 goto usage
+        if !temp! lss 0  goto usage
         if !temp! gtr 40 goto usage
         set function=F*tP!temp!
-        set display=!display! %~4%
+        set display=!display! !temp!
         goto send
       )
-
       if "%~3"=="pos" (
+        if "%~4"=="" goto usage
         set pos=%~4
         if !pos! lss 0 goto usage
         if !pos! gtr 5 goto usage
         set /a pos=!pos!+50+!pos!*2-!pos!
         set function=F*tP!pos!.0
-        set display=!display! %~4%
+        set display=!display! !pos!
         goto send
       )
-
       goto usage
     )
   )
@@ -168,34 +159,58 @@ if "%~1"=="trv" (
 
 if "%~1"=="stat" (
 
+  if "%~2"=="" goto usage
+
   for /l %%r in (1,1,16) do (
     if "!STAT%%r!"=="%~2" (
 
       set room=R%%r
-      set display=Thermostat^|%~3
 
       if "%~3"=="register" (
         set function=F*L
+        set display=thermostat^|register
         goto send
       )
 
       set device=Dh
 
       if "%~3"=="temp" (
+        if "%~4"=="" goto usage
         set temp=%~4
-        if !temp! lss 0 goto usage
+        if !temp! lss 0  goto usage
         if !temp! gtr 40 goto usage
         set function=F*tP!temp!
-        set display=!display! %~4%
+        set display=thermostat^|!temp!
         goto send
       )
 
+      if "%~3"=="mode" (
+
+        if "%~4"=="" goto usage
+
+        set display=thermostat^|%~4%
+
+        if "%~4"=="standby"  set function=F*mP0& goto send
+        if "%~4"=="running"  set function=F*mP1& goto send
+        if "%~4"=="away"     set function=F*mP2& goto send
+        if "%~4"=="frost"    set function=F*mP3& goto send
+        if "%~4"=="constant" set function=F*mP4& goto send
+        if "%~4"=="holiday" (
+          set days=%~5
+          if !days! lss 0  goto usage
+          if !days! gtr 90 goto usage
+          set function=F*mP5,!days!
+          goto send
+        )
+        goto usage
+      )
       goto usage
     )
   )
-
   goto usage
 )
+
+if "%~1"=="" goto usage
 
 for /l %%r in (1,1,16) do (
   if "!R%%r!"=="%~1" (
@@ -203,6 +218,7 @@ for /l %%r in (1,1,16) do (
     set room=R%%r
 
     if "%~2"=="mood" (
+      if "%~3"=="" goto usage
       for /l %%m in (1,1,3) do if "!R%%rM%%m!"=="%~3" set mood=%%m
       if "!mood!"=="" goto usage
       set function=FmP!mood!
@@ -215,35 +231,18 @@ for /l %%r in (1,1,16) do (
       goto send
     )
 
+    if "%~2"=="" goto usage
+
     for /l %%d in (1,1,16) do if "!R%%rD%%d!"=="%~2" set device=D%%d
     if "!device!"=="" goto usage
 
-    if "%~3"=="on" (
-      set function=F1
-      goto send
-    )
-
-    if "%~3"=="off" (
-      set function=F0
-      goto send
-    )
-
-    if "%~3"=="lock" (
-      set function=Fl
-      goto send
-    )
-
-    if "%~3"=="full-lock" (
-      set function=Fk
-      goto send
-    )
-
-    if "%~3"=="unlock" (
-      set function=Fu
-      goto send
-    )
-
+    if "%~3"=="on"        set function=F1& goto send
+    if "%~3"=="off"       set function=F0& goto send
+    if "%~3"=="lock"      set function=Fl& goto send
+    if "%~3"=="full-lock" set function=Fk& goto send
+    if "%~3"=="unlock"    set function=Fu& goto send
     if "%~3"=="dim" (
+      if "%~4"=="" goto usage
       set dimlevel=%~4
       if !dimlevel! lss 1 goto usage
       if !dimlevel! gtr 100 goto usage
@@ -273,14 +272,12 @@ for /f "tokens=*" %%a in ('!exec!') do (
   set rx_msg=!rx_msg!"%%a"
 )
 
-if "!rx_msg!"=="" (
-  echo No confirmation received from WifiLink 1>&2
-)
+if "!rx_msg!"=="" echo No confirmation received from WifiLink 1>&2
 
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v6.5 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v6.6 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf register!lf!^
@@ -288,7 +285,7 @@ lwrf room-name device-name on^|off^|lock^|full-lock^|unlock^|dim 1-100!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
 lwrf trv trv-name register^|on^|off^|temp 0-40^|pos 0-5!lf!^
-lwrf stat stat-name register^|temp 0-40!lf!^
+lwrf stat stat-name register^|temp 0-40^|mode [standby^|running^|away^|frost^|constant^|holiday 1-90]!lf!^
 lwrf seq sequence-name!lf!^
 lwrf seq --cancel-all!lf!^
 
@@ -299,6 +296,8 @@ lwrf "sitting room" "wall lights" on!lf!^
 lwrf seq "my sequence"!lf!^
 lwrf trv lounge temp 22!lf!^
 lwrf stat sitting-room temp 22!lf!^
+lwrf stat sitting-room mode constant!lf!^
+lwrf stat sitting-room mode holiday 14!lf!^
 
 Requirements:!lf!^
 1 The ncat utility to send the messages. Download the Windows binary from!lf!^
