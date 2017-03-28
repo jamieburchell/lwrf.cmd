@@ -275,27 +275,27 @@ for /l %%r in (1,1,15) do (
 
       set display=!display! %~4
 
-      if "%4"=="white"              set function=F*cP1& goto send
-      if "%4"=="green-white"        set function=F*cP2& goto send
-      if "%4"=="red-white"          set function=F*cP3& goto send
-      if "%4"=="yellow-white"       set function=F*cP4& goto send
-      if "%4"=="red"                set function=F*cP5& goto send
-      if "%4"=="middle-red"         set function=F*cP6& goto send
-      if "%4"=="pink"               set function=F*cP7& goto send
-      if "%4"=="light-red"          set function=F*cP8& goto send
-      if "%4"=="orange"             set function=F*cP9& goto send
-      if "%4"=="middle-orange"      set function=F*cP10& goto send
-      if "%4"=="green-white"        set function=F*cP11& goto send
-      if "%4"=="light-orange"       set function=F*cP12& goto send
-      if "%4"=="green"              set function=F*cP13& goto send
-      if "%4"=="middle-green"       set function=F*cP14& goto send
-      if "%4"=="light-yellow-green" set function=F*cP15& goto send
-      if "%4"=="yellow-green"       set function=F*cP16& goto send
-      if "%4"=="blue"               set function=F*cP17& goto send
-      if "%4"=="water-blue"         set function=F*cP18& goto send
-      if "%4"=="light-blue"         set function=F*cP19& goto send
-      if "%4"=="white-blue"         set function=F*cP20& goto send
-      if "%4"=="cycle"              set function=F*y& goto send
+      if "%~4"=="white"              set function=F*cP1& goto send
+      if "%~4"=="green-white"        set function=F*cP2& goto send
+      if "%~4"=="red-white"          set function=F*cP3& goto send
+      if "%~4"=="yellow-white"       set function=F*cP4& goto send
+      if "%~4"=="red"                set function=F*cP5& goto send
+      if "%~4"=="middle-red"         set function=F*cP6& goto send
+      if "%~4"=="pink"               set function=F*cP7& goto send
+      if "%~4"=="light-red"          set function=F*cP8& goto send
+      if "%~4"=="orange"             set function=F*cP9& goto send
+      if "%~4"=="middle-orange"      set function=F*cP10& goto send
+      if "%~4"=="green-white"        set function=F*cP11& goto send
+      if "%~4"=="light-orange"       set function=F*cP12& goto send
+      if "%~4"=="green"              set function=F*cP13& goto send
+      if "%~4"=="middle-green"       set function=F*cP14& goto send
+      if "%~4"=="light-yellow-green" set function=F*cP15& goto send
+      if "%~4"=="yellow-green"       set function=F*cP16& goto send
+      if "%~4"=="blue"               set function=F*cP17& goto send
+      if "%~4"=="water-blue"         set function=F*cP18& goto send
+      if "%~4"=="light-blue"         set function=F*cP19& goto send
+      if "%~4"=="white-blue"         set function=F*cP20& goto send
+      if "%~4"=="cycle"              set function=F*y& goto send
       goto usage
     )
   )
@@ -324,7 +324,7 @@ if "!rx_msg!"=="" echo No confirmation received from WifiLink 1>&2
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v7.0 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v7.1 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf link!lf!^
