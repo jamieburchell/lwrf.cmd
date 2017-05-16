@@ -1,7 +1,7 @@
 lwrf.cmd
 ========
 
-LightwaveRF Windows Command Line Control v7.1 by Jamie Burchell
+LightwaveRF Windows Command Line Control v7.2 by Jamie Burchell
 
 ## Usage:
 
@@ -36,7 +36,7 @@ lwrf stat sitting-room mode holiday 14
 2. You must edit the configuration parameters at the top of the lwrf.cmd script
 3. Allow ports %wifi_link_port% outbound (UDP) and %source_port% inbound (UDP) on the device
 4. The MAC address of this device must be registered with your WifiLink.
-   Enter: lwrf register and select "Yes" at the WifiLink unit
+   Enter: lwrf link and select "Yes" at the WifiLink unit
 
 ## Forum/Support
 http://lightwaverfcommunity.org.uk/forums/topic/windows-command-line-control
