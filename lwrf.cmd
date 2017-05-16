@@ -324,7 +324,7 @@ if "!rx_msg!"=="" echo No confirmation received from WifiLink 1>&2
 goto err
 
 :usage
-set usage=LightwaveRF Windows Command Line Control v7.1 by Jamie Burchell!lf!^
+set usage=LightwaveRF Windows Command Line Control v7.2 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf link!lf!^
@@ -353,7 +353,7 @@ Requirements:!lf!^
 2 You must edit the configuration parameters at the top of this script!lf!^
 3 Allow ports %wifi_link_port% outbound (UDP) and %source_port% inbound (UDP) on this device!lf!^
 4 The MAC address of this device must be registered with your WifiLink.!lf!^
-  Enter: lwrf register and select "Yes" at the WifiLink unit
+  Enter: lwrf link and select "Yes" at the WifiLink unit
 
 echo !usage! 1>&2
 
