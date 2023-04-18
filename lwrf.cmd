@@ -120,11 +120,8 @@ if "%~1"=="seq" (
 )
 
 if "%~1"=="trv" (
-
   if "%~2"=="" goto usage
-
   for /l %%r in (1,1,80) do (
-
     if "!TRV%%r!"=="%~2" (
 
       set room=R%%r
@@ -196,17 +193,13 @@ if "%~1"=="stat" (
       )
 
       if "%~3"=="mode" (
-
         if "%~4"=="" goto usage
-
         set display=thermostat^|%~4%
-
         if "%~4"=="standby"  set function=F*mP0& goto send
         if "%~4"=="running"  set function=F*mP1& goto send
         if "%~4"=="away"     set function=F*mP2& goto send
         if "%~4"=="frost"    set function=F*mP3& goto send
         if "%~4"=="constant" set function=F*mP4& goto send
-
         if "%~4"=="holiday" (
           set days=%~5
           if !days! lss 0  goto usage
@@ -257,7 +250,6 @@ for /l %%r in (1,1,15) do (
     if "%~3"=="open"      set function=F^(& goto send
     if "%~3"=="close"     set function=F^)& goto send
     if "%~3"=="stop"      set function=F^^& goto send
-
     if "%~3"=="dim" (
       if "%~4"=="" goto usage
       set dimlevel=%~4
@@ -270,11 +262,8 @@ for /l %%r in (1,1,15) do (
     )
 
     if "%~3"=="colour" (
-
       if "%~4"=="" goto usage
-
       set display=!display! %~4
-
       if "%~4"=="white"              set function=F*cP1& goto send
       if "%~4"=="green-white"        set function=F*cP2& goto send
       if "%~4"=="red-white"          set function=F*cP3& goto send
@@ -328,11 +317,11 @@ set usage=LightwaveRF Windows Command Line Control v7.2 by Jamie Burchell!lf!^
 
 Usage:!lf!^
 lwrf link!lf!^
-lwrf room-name device-name on^|off^|open^|close^|stop^|lock^|full-lock^|unlock^|dim 1-100^|colour [colour-name^|cycle]!lf!^
+lwrf room-name device-name on^|off^|open^|close^|stop^|lock^|full-lock^|unlock^|dim 1-100^|colour (colour-name^|cycle)!lf!^
 lwrf room-name off!lf!^
 lwrf room-name mood mood-name!lf!^
 lwrf trv trv-name link^|unlink^|on^|off^|temp 0-40^|pos 0-5!lf!^
-lwrf stat stat-name link^|unlink^|temp 0-40^|mode [standby^|running^|away^|frost^|constant^|holiday 1-90]!lf!^
+lwrf stat stat-name link^|unlink^|temp 0-40^|mode (standby^|running^|away^|frost^|constant^|holiday 1-90)!lf!^
 lwrf seq sequence-name!lf!^
 lwrf seq cancel-all!lf!^
 
