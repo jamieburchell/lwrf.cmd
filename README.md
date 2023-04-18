@@ -7,11 +7,11 @@ LightwaveRF Windows Command Line Control v7.2 by Jamie Burchell
 
 ```
 lwrf link
-lwrf room-name device-name on|off|open|close|stop|lock|full-lock|unlock|dim 1-100|colour [colour-name|cycle]
+lwrf room-name device-name on|off|open|close|stop|lock|full-lock|unlock|dim 1-100|colour (colour-name|cycle)
 lwrf room-name off
 lwrf room-name mood mood-name
 lwrf trv trv-name link|unlink|on|off|temp 0-40|pos 0-5
-lwrf stat stat-name link|unlink|temp 0-40|mode [standby|running|away|frost|constant|holiday 1-90]
+lwrf stat stat-name link|unlink|temp 0-40|mode (standby|running|away|frost|constant|holiday 1-90)
 lwrf seq sequence-name
 lwrf seq cancel-all
 ```
